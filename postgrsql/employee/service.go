@@ -8,11 +8,11 @@ import (
 )
 
 type Service interface {
-	GetCustomerById(context echo.Context) error
-	GetCustomers(context echo.Context) error
-	InsertCustomer(context echo.Context) error
-	UpdateCustomer(context echo.Context) error
-	DeleteCustomer(context echo.Context) error
+	GetEmployeeById(context echo.Context) error
+	GetEmployees(context echo.Context) error
+	InsertEmployee(context echo.Context) error
+	UpdateEmployee(context echo.Context) error
+	DeleteEmployee(context echo.Context) error
 }
 
 type service struct {
@@ -23,9 +23,9 @@ func NewService(repo dbpostgrsql.Postgrsql) Service {
 	return &service{repo: repo}
 }
 
-func (s *service) GetCustomerById(c echo.Context) error {
-	customerID := c.QueryParam("ID")
-	row, err := s.repo.GetById(customerID)
+func (s *service) GetEmployeeById(c echo.Context) error {
+	employeeID := c.QueryParam("ID")
+	row, err := s.repo.GetById(employeeID)
 	if err != nil {
 		return c.JSON(http.StatusForbidden, err)
 	}
@@ -33,22 +33,22 @@ func (s *service) GetCustomerById(c echo.Context) error {
 	return c.JSON(http.StatusOK, row)
 }
 
-func (s *service) InsertCustomer(c echo.Context) (err error) {
-	customer := new(dbpostgrsql.Customer)
-	if err = c.Bind(customer); err != nil {
+func (s *service) InsertEmployee(c echo.Context) (err error) {
+	employee := new(dbpostgrsql.Employee)
+	if err = c.Bind(employee); err != nil {
 		return c.JSON(http.StatusForbidden, err)
 	}
 
-	newCustomer, err := s.repo.Insert(customer)
+	newEmployee, err := s.repo.Insert(employee)
 	if err != nil {
 		return c.JSON(http.StatusForbidden, err)
 	}
 
-	return c.JSON(http.StatusOK, newCustomer)
+	return c.JSON(http.StatusOK, newEmployee)
 }
 
-func (s *service) GetCustomers(c echo.Context) (err error) {
-	params := new(dbpostgrsql.GetCustomersRequest)
+func (s *service) GetEmployees(c echo.Context) (err error) {
+	params := new(dbpostgrsql.GetEmployeesRequest)
 	if err = c.Bind(params); err != nil {
 		return
 	}
@@ -57,31 +57,31 @@ func (s *service) GetCustomers(c echo.Context) (err error) {
 		return c.JSON(http.StatusForbidden, err)
 	}
 
-	totalCustomers, err := s.repo.GetCount()
+	totalEmployees, err := s.repo.GetCount()
 	if err != nil {
 		return c.JSON(http.StatusForbidden, err)
 	}
-	cant := dbpostgrsql.CustomerList{Data: row, TotalRecords: totalCustomers}
+	cant := dbpostgrsql.EmployeeList{Data: row, TotalRecords: totalEmployees}
 	return c.JSON(http.StatusOK, cant)
 
 }
 
-func (s *service) UpdateCustomer(c echo.Context) (err error) {
-	customer := new(dbpostgrsql.UpdateCustomerRequest)
-	if err = c.Bind(customer); err != nil {
+func (s *service) UpdateEmployee(c echo.Context) (err error) {
+	employee := new(dbpostgrsql.UpdateEmployeeRequest)
+	if err = c.Bind(employee); err != nil {
 		return
 	}
-	update, err := s.repo.Update(customer)
+	update, err := s.repo.Update(employee)
 	if err != nil {
 		return c.JSON(http.StatusForbidden, err)
 	}
-	//result := StatusAction{Action: "OK", Update: updateCustomer}
+	//result := StatusAction{Action: "OK", Update: updateEmployee}
 	return c.JSON(http.StatusOK, update)
 }
 
-func (s *service) DeleteCustomer(c echo.Context) error {
-	customerID := c.QueryParam("ID")
-	delete, err := s.repo.DeleteById(customerID)
+func (s *service) DeleteEmployee(c echo.Context) error {
+	employeeID := c.QueryParam("ID")
+	delete, err := s.repo.DeleteById(employeeID)
 	if err != nil {
 		return c.JSON(http.StatusForbidden, err)
 	}

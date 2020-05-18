@@ -6,21 +6,19 @@ import (
 )
 
 const (
-	//host = "172.18.0.2"
-	host = "localhost"
-	//host     = os.Getenv("LOCAL_HOST")
+	host     = "172.18.0.2"
 	port     = 5432
 	user     = "postgres"
 	password = "admin"
 	dbname   = "testdb"
 )
 
-type GetCustomersRequest struct {
+type GetEmployeesRequest struct {
 	Limit  int `json:"limit" form:"limit" query:"limit"`
 	Offset int `json:"offset" form:"offset" query:"offset"`
 }
 
-type Customer struct {
+type Employee struct {
 	ID        string    `bson:"id" json:"id,omitempty"`
 	Name      string    `bson:"name"`
 	Email     string    `json:"email"`
@@ -29,12 +27,12 @@ type Customer struct {
 	UpdateAt  time.Time `bson:"update_at"`
 }
 
-type CustomerList struct {
-	Data         []*Customer `json:"data"`
+type EmployeeList struct {
+	Data         []*Employee `json:"data"`
 	TotalRecords int         `json:"totalRecords"`
 }
 
-type UpdateCustomerRequest struct {
+type UpdateEmployeeRequest struct {
 	ID       string `json:"id" form:"id" query:"id"`
 	Name     string `json:"name" form:"name" query:"name"`
 	Email    string `json:"email" form:"email" query:"email"`

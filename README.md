@@ -12,4 +12,21 @@ it is created in the tokens folder
 
 **compilate**
 
+`sudo docker-compose build`
 `sudo docker-compose up`
+
+**make a request first**
+
+`/api/test`
+
+**for get a tokens use**  /api/authentication **with body** 
+
+```json
+{
+	"email": "test@example.com",
+	"password":"test1234"
+}
+```
+
+
+
