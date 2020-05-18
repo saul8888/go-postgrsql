@@ -1,0 +1,4 @@
+method=GET, uri=/api/total, status=401,latency:49715
+method=GET, uri=/api/total?, status=401,latency:23658
+method=GET, uri=/api/total?, status=200,latency:768980
+method=GET, uri=/api/total?, status=200,latency:1247846
