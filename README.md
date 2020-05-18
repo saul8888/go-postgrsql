@@ -13,6 +13,7 @@ it is created in the tokens folder
 **compilate**
 
 `sudo docker-compose build`
+
 `sudo docker-compose up`
 
 **make a request first**
